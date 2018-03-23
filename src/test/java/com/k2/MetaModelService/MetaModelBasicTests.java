@@ -18,7 +18,7 @@ public class MetaModelBasicTests {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 		
-	private MetaModel metaModel = MetaModel.prepare(DummyApp.class);
+	private MetaModel metaModel;
 
 	@Test
 	public void readApplicationConfigTest() 
