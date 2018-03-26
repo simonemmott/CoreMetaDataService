@@ -1,6 +1,6 @@
 package com.k2.MetaModelService.metadata;
 
-import com.k2.MetaModel.MetaModelSubType;
+import com.k2.MetaModel.model.types.MetaModelSubType;
 import com.k2.MetaModelService.types.K2SubType;
 
 public class MetaDataSubType {

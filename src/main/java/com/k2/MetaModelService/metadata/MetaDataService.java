@@ -3,8 +3,8 @@ package com.k2.MetaModelService.metadata;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.k2.MetaModel.MetaModelClass;
-import com.k2.MetaModel.MetaModelService;
+import com.k2.MetaModel.model.MetaModelService;
+import com.k2.MetaModel.model.MetaModelType;
 import com.k2.MetaModelService.types.K2Class;
 import com.k2.MetaModelService.types.K2Embeddable;
 import com.k2.MetaModelService.types.K2Entity;
@@ -26,7 +26,7 @@ public class MetaDataService {
 		List<K2Embeddable> managedEmbeddables = new ArrayList<K2Embeddable>();
 		List<K2Transient> managedTransients = new ArrayList<K2Transient>();
 
-		for (MetaModelClass<?> mmc : mms.getMamagedClasses()) {
+		for (MetaModelType<?> mmc : mms.getManagedTypes()) {
 			K2Class k2Class = (K2Class) metadata.registerType(MetaDataClass.toData(metadata, mmc));
 			k2Class.setService(service);
 			allManagedTypes.add(k2Class);

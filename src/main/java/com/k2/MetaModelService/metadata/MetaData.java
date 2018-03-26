@@ -10,8 +10,8 @@ import java.util.TreeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.k2.MetaModel.MetaModel;
-import com.k2.MetaModel.MetaModelService;
+import com.k2.MetaModel.model.MetaModel;
+import com.k2.MetaModel.model.MetaModelService;
 import com.k2.MetaModelService.types.*;
 import com.k2.Util.Version.Version;
 

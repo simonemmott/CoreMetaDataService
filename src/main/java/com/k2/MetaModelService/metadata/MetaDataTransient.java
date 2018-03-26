@@ -1,6 +1,6 @@
 package com.k2.MetaModelService.metadata;
 
-import com.k2.MetaModel.MetaModelTransient;
+import com.k2.MetaModel.model.types.classes.MetaModelTransient;
 import com.k2.MetaModelService.types.K2Class;
 import com.k2.MetaModelService.types.K2Embeddable;
 import com.k2.MetaModelService.types.K2Transient;

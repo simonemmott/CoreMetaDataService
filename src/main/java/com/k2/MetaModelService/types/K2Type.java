@@ -13,13 +13,13 @@ import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Embedded;
 
 import com.k2.MetaModel.TypeValue;
-import com.k2.MetaModel.annotations.MetaClass;
+import com.k2.MetaModel.annotations.MetaType;
 import com.k2.MetaModel.annotations.MetaEntity;
 import com.k2.MetaModel.annotations.MetaSubType;
 import com.k2.MetaModel.annotations.MetaVersion;
 
 @MetaVersion(major=0, minor=0, point=1)
-@MetaClass
+@MetaType
 @MetaEntity
 @Entity
 @Table(name="TYPES")
@@ -32,7 +32,8 @@ public class K2Type  implements Comparable<K2Type> {
 		return (type+":"+className).compareTo(o.type+":"+o.className); 
 	}
 
-	@MetaSubType(description="The top level types of the basic type class")
+	@MetaType(description="The top level types of the basic type class")
+	@MetaSubType
 	public enum Type implements TypeValue {
 		PRIMITIVE("PRIMITIVE", "Primitive type", "Primitive values like int, long, char etc."),
 		CLASS("NATIVE", "Native type", "Native values are types that exist natively in the java language"),

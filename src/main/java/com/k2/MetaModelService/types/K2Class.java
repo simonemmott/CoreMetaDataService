@@ -22,13 +22,13 @@ import javax.persistence.PrimaryKeyJoinColumns;
 import javax.persistence.Table;
 
 import com.k2.MetaModel.TypeValue;
-import com.k2.MetaModel.annotations.MetaClass;
+import com.k2.MetaModel.annotations.MetaType;
 import com.k2.MetaModel.annotations.MetaEntity;
 import com.k2.MetaModel.annotations.MetaSubType;
 import com.k2.MetaModel.annotations.MetaVersion;
 
 @MetaVersion(major=0, minor=0, point=1)
-@MetaClass
+@MetaType
 @MetaEntity
 @Entity
 @Table(name="CLASSES")
@@ -38,7 +38,8 @@ import com.k2.MetaModel.annotations.MetaVersion;
 @PrimaryKeyJoinColumn(name="CLASSNAME", referencedColumnName="CLASSNAME")
 public class K2Class extends K2Type {
 
-	@MetaSubType(title="Class Types", description="The subtypes of the class type")
+	@MetaType(title="Class Types", description="The subtypes of the class type")
+	@MetaSubType
 	public enum ClassType implements TypeValue {
 		NATIVE("NATIVE", "Native type", "Native types like String, Long, Date etc."),
 		ENTITY("ENTITY", "Entity type", "Entity types are classes that can be persisted using the Java Persistence API, JPA"),

@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Table;
 
-import com.k2.MetaModel.annotations.MetaClass;
+import com.k2.MetaModel.annotations.MetaType;
 import com.k2.MetaModel.annotations.MetaEmbeddable;
 import com.k2.MetaModel.annotations.MetaEntity;
 import com.k2.MetaModel.annotations.MetaVersion;
@@ -12,7 +12,7 @@ import com.k2.Util.Version.Increment;
 import com.k2.Util.Version.Version;
 
 @MetaVersion(major=0, minor=0, point=1)
-@MetaClass
+@MetaType
 @MetaEmbeddable
 @Embeddable
 @Table(name="VERSIONS")

@@ -8,12 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.k2.MetaModel.annotations.MetaClass;
+import com.k2.MetaModel.annotations.MetaType;
 import com.k2.MetaModel.annotations.MetaEntity;
 import com.k2.MetaModel.annotations.MetaVersion;
 
 @MetaVersion(major=0, minor=0, point=1)
-@MetaClass
+@MetaType
 @MetaEntity
 @Entity
 @Table(name="SERVICES")

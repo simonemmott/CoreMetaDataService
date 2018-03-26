@@ -1,7 +1,7 @@
 package com.k2.MetaModelService.metadata;
 
-import com.k2.MetaModel.MetaModelClass;
-import com.k2.MetaModel.MetaModelEntity;
+import com.k2.MetaModel.model.MetaModelType;
+import com.k2.MetaModel.model.types.classes.MetaModelEntity;
 import com.k2.MetaModelService.types.K2Class;
 import com.k2.MetaModelService.types.K2Entity;
 

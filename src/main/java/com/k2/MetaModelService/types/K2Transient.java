@@ -16,10 +16,10 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.PrimaryKeyJoinColumns;
 import javax.persistence.Table;
 
-import com.k2.MetaModel.annotations.MetaClass;
+import com.k2.MetaModel.annotations.MetaType;
 import com.k2.MetaModel.annotations.MetaEntity;
 
-@MetaClass
+@MetaType
 @MetaEntity
 @Entity
 @Table(name="TRANSIENTS")

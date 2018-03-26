@@ -8,8 +8,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.k2.MetaModel.MetaModel;
-import com.k2.MetaModel.MetaModelService;
+import com.k2.MetaModel.model.MetaModel;
+import com.k2.MetaModel.model.MetaModelService;
 import com.k2.MetaModelService.metadata.MetaData;
 import com.k2.MetaModelService.types.K2Type;
 import com.k2.Util.Version.Version;
@@ -43,7 +43,7 @@ public class MetaModelBasicTests {
 		assertEquals("metaModel", mms.alias());
 		assertEquals("metaModel", mms.alias());
 		
-		assertEquals(13, mms.getMamagedClasses().size());
+		assertEquals(13, mms.getManagedClasses().size());
 
     }
 	

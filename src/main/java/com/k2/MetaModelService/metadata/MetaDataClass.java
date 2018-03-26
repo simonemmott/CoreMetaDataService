@@ -3,18 +3,18 @@ package com.k2.MetaModelService.metadata;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.k2.MetaModel.MetaModelClass;
-import com.k2.MetaModel.MetaModelEmbeddable;
-import com.k2.MetaModel.MetaModelEntity;
-import com.k2.MetaModel.MetaModelSubType;
-import com.k2.MetaModel.MetaModelTransient;
+import com.k2.MetaModel.model.MetaModelType;
+import com.k2.MetaModel.model.types.MetaModelSubType;
+import com.k2.MetaModel.model.types.classes.MetaModelEmbeddable;
+import com.k2.MetaModel.model.types.classes.MetaModelEntity;
+import com.k2.MetaModel.model.types.classes.MetaModelTransient;
 import com.k2.MetaModelService.types.K2Class;
 import com.k2.MetaModelService.types.K2SubType;
 import com.k2.MetaModelService.types.K2Type;
 
 public class MetaDataClass {
 
-	public static K2Class toData(MetaData metadata, MetaModelClass<?> mmc) {
+	public static K2Class toData(MetaData metadata, MetaModelType<?> mmc) {
 		K2Class k2Class;
 		if (mmc instanceof MetaModelEntity)
 			k2Class = MetaDataEntity.toData(metadata, (MetaModelEntity<?>)mmc);

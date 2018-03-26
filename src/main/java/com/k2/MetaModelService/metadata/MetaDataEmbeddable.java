@@ -1,6 +1,6 @@
 package com.k2.MetaModelService.metadata;
 
-import com.k2.MetaModel.MetaModelEmbeddable;
+import com.k2.MetaModel.model.types.classes.MetaModelEmbeddable;
 import com.k2.MetaModelService.types.K2Class;
 import com.k2.MetaModelService.types.K2Embeddable;
 import com.k2.MetaModelService.types.K2Entity;
