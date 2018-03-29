@@ -37,7 +37,7 @@
     <dependency>
     	<groupId>com.k2</groupId>
     	<artifactId>MetaModel</artifactId>
-    	<version>0.0.1-SNAPSHOT</version>
+    	<version>0.1.0</version>
     </dependency>
     <dependency>
     	<groupId>com.k2</groupId>
