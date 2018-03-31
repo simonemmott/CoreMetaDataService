@@ -9,11 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.k2.MetaModel.model.MetaModel;
+import com.k2.MetaModel.model.MetaModelService;
 import com.k2.Service.dataAccess.K2Dao;
 import com.k2.Service.service.ServiceManager;
 import com.k2.Util.Version.Version;
 import com.k2.Util.tuple.Pair;
 import com.k2.core.config.CoreMetaDataAppConfig;
+import com.k2.core.config.CoreMetaDataServiceConfig;
 import com.k2.core.metadata.MetaData;
 import com.k2.core.model.K2Application;
 import com.k2.core.model.K2ApplicationId;
@@ -75,5 +77,18 @@ public class CoreMetaDataBasicTests {
 	@Test
 	public void serviceMethodInvokationTest() throws Throwable {
 		assertEquals(23, metaData.getServiceManager().invokeServiceMethod("testMethod", new Pair("str", "This is a value for str")));
+	}
+	
+	@Test
+	public void configurationTest() {
+		metaData.getMetaModel().configure("/Users/simon/Personal/K2_Workshop/example/conf");
+		
+		MetaModelService metaService = metaData.getMetaServicel();
+		CoreMetaDataServiceConfig config = metaService.getConfiguration(CoreMetaDataServiceConfig.class);
+		
+		assertNotNull(config);
+		
+		assertEquals("/Users/simon/Personal/K2_Workshop/example/json", config.getMetadateRepositoryPath());
+		assertEquals("/Users/simon/Personal/K2_Workshop/example/src", config.getJavaRepositoryPath());
 	}
 }
