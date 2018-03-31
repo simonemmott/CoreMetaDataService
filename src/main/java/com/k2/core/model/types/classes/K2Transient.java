@@ -33,8 +33,8 @@ public class K2Transient extends K2Class {
 	public K2Transient() {
 		super(); 
 	}
-	public K2Transient(String className) {
-		super(className); 
+	public K2Transient(long id) {
+		super(id); 
 		this.setClassType(K2Class.ClassType.TRANSIENT);
 	}
 	

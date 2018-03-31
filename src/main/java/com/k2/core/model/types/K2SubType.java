@@ -24,8 +24,8 @@ public class K2SubType extends K2Type {
 	public K2SubType() {
 		super(); 
 	}
-	public K2SubType(String className) {
-		super(className); 
+	public K2SubType(long id) {
+		super(id); 
 		this.setType(K2Type.Type.ENUM);
 	}
 	

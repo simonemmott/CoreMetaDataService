@@ -7,6 +7,7 @@ import com.k2.core.metadata.MetaData;
 import com.k2.core.metadata.MetaToDataConvertor;
 import com.k2.core.model.K2Version;
 import com.k2.core.model.types.K2Class;
+import com.k2.core.model.types.classes.K2Embeddable;
 import com.k2.core.model.types.classes.K2Entity;
 
 public class MetaToK2Entity extends MetaToDataConvertor<K2Entity> {
@@ -16,7 +17,8 @@ public class MetaToK2Entity extends MetaToDataConvertor<K2Entity> {
 	@SuppressWarnings("unchecked")
 	public K2Entity convert(Object obj) {
 		MetaModelEntity<K2Entity> meta = (MetaModelEntity<K2Entity>)obj;
-		K2Entity conv = new K2Entity(meta.className());
+		K2Entity conv = metaData.getServiceManager().newEntity(K2Entity.class);
+		conv.setClassName(meta.className());
 		conv.setClassType(K2Class.ClassType.ENTITY);
 		conv.setTableName(meta.tableName());
 		conv.setVersion(new K2Version(meta.version()));

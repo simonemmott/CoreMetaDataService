@@ -3,7 +3,7 @@ package com.k2.core.metadata;
 import java.io.Serializable;
 import java.util.List;
 
-import com.k2.K2Service.dataAccess.K2Dao;
+import com.k2.Service.dataAccess.K2Dao;
 import com.k2.Util.KeyUtil;
 
 public class MetaDataDao<E, K extends Serializable> implements K2Dao<E, K> {
@@ -22,9 +22,9 @@ public class MetaDataDao<E, K extends Serializable> implements K2Dao<E, K> {
 	@Override public Class<K> keyType() { return keyType; }
 
 	@SuppressWarnings("unchecked")
-	@Override public K key(Serializable... values) { return (K) KeyUtil.getKey(keyType, (Object[])values); }
+	@Override public K key(Serializable... values) { return (K) KeyUtil.constructKey((Class<Serializable>) keyType, (Object[])values); }
 
-	@Override public E find(K key) { return cache.find(key); }
+	@Override public E find(Serializable key) { return cache.find(key); }
 
 	@Override public E insert(E entity) { return cache.persist(entity); }
 

@@ -7,6 +7,7 @@ import com.k2.core.metadata.LinkedMetaData;
 import com.k2.core.metadata.MetaData;
 import com.k2.core.metadata.MetaToDataConvertor;
 import com.k2.core.model.K2Type;
+import com.k2.core.model.types.K2Interface;
 import com.k2.core.model.types.K2Primitive;
 import com.k2.core.model.types.classes.K2Native;
 
@@ -19,8 +20,9 @@ public class MetaToK2Primitive extends MetaToDataConvertor<K2Primitive> {
 	@Override
 	public K2Primitive convert(Object obj) {
 		MetaModelPrimitive<K2Primitive> meta = (MetaModelPrimitive<K2Primitive>)obj;
-		K2Primitive conv = new K2Primitive(meta.className());
-
+		K2Primitive conv =  metaData.getServiceManager().newEntity(K2Primitive.class);
+		conv.setClassName(meta.className());
+		
 		if (meta.metaNativeClass() != null) {
 			metaData.addLinkedMetaData(new LinkedMetaData<K2Primitive,K2Native>(conv, K2Native.class) {
 				@Override public Object getMetaObject() { return meta.metaNativeClass(); }

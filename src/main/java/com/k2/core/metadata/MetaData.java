@@ -5,8 +5,10 @@ import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import javax.persistence.EntityExistsException;
@@ -15,14 +17,18 @@ import javax.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.k2.K2Service.dataAccess.K2Dao;
-import com.k2.K2Service.dataAccess.K2DaoFactory;
 import com.k2.MetaModel.annotations.MetaService;
 import com.k2.MetaModel.model.MetaModel;
 import com.k2.MetaModel.model.MetaModelService;
 import com.k2.MetaModel.model.MetaModelType;
 import com.k2.MetaModel.model.types.MetaModelPrimitive;
 import com.k2.MetaModel.model.types.classes.MetaModelNative;
+import com.k2.Service.dataAccess.K2Dao;
+import com.k2.Service.dataAccess.K2DaoFactory;
+import com.k2.Service.sequence.MemorySequences;
+import com.k2.Service.service.GenericServiceManager;
+import com.k2.Service.service.ServiceManager;
+import com.k2.Service.service.ValidationException;
 import com.k2.Util.KeyUtil;
 import com.k2.Util.StringUtil;
 import com.k2.Util.Identity.IdentityUtil;
@@ -50,11 +56,19 @@ public class MetaData implements K2DaoFactory {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	public static MetaData fromMetaModel(MetaModel metaModel) {
-		return new MetaData(metaModel);
+		try {
+			return new MetaData(metaModel);
+		} catch (ValidationException e) {
+			logger.error("Validation error reading the metaModel - {}", e, e.getMessage());
+			return null;
+		}
 	}
 	
 	private MetaModel metaModel;
 	public MetaModel getMetaModel() { return metaModel; }
+	
+	private ServiceManager metaDataServiceManager;
+	public ServiceManager getServiceManager() { return metaDataServiceManager; }
 	
 	private MetaModelService coreMetaService;
 	public MetaModelService getMetaServicel() { return coreMetaService; }
@@ -103,8 +117,11 @@ public class MetaData implements K2DaoFactory {
 	private Map<Class<?>, MetaToDataConvertor<?>> convertors = new HashMap<Class<?>, MetaToDataConvertor<?>>();
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private MetaData(MetaModel metaModel) {
+	private MetaData(MetaModel metaModel) throws ValidationException {
 		
+		metaDataServiceManager = new GenericServiceManager(metaModel.metaModelService("coreMetaDataService"), this, new MemorySequences());
+		
+		convertors.put(K2Application.class, new MetaToK2Application(this));
 		convertors.put(K2Type.class, new MetaToK2Type(this));
 		convertors.put(K2Class.class, new MetaToK2Class(this));
 		convertors.put(K2Interface.class, new MetaToK2Interface(this));
@@ -119,22 +136,29 @@ public class MetaData implements K2DaoFactory {
 		this.metaModel = metaModel;		
 		this.coreMetaService = metaModel.metaModelService(CoreMetaDataServiceConfig.class.getAnnotation(MetaService.class).alias());
 		
+		MetaToK2Application appConvertor = (MetaToK2Application)convertors.get(K2Application.class);
+		K2Application app = appConvertor.convert(metaModel);
+		metaDataServiceManager.save(app);
+		
 		MetaToK2Type typeConvertor = (MetaToK2Type) convertors.get(K2Type.class);
 		for (MetaModelPrimitive primitive : MetaModelPrimitive.getPrimitives()) {
-			persist(typeConvertor.convert(primitive));
+			metaDataServiceManager.save(typeConvertor.convert(primitive));
 		}
 		
 		for (MetaModelNative n : MetaModelNative.getNatives()) {
-			persist(typeConvertor.convert(n));
+			metaDataServiceManager.save(typeConvertor.convert(n));
 		}
 		
 		MetaToK2Service servicConvertor = (MetaToK2Service) convertors.get(K2Service.class);
 		for (MetaModelService metaService : metaModel.implementedServices()) {
-			persist(servicConvertor.convert(metaService));
+			K2Service service = servicConvertor.convert(metaService);
+			K2ImplementedService is = app.newItemInImplementedServices();
+			is.setServiceAlias(service.getAlias());
+			metaDataServiceManager.save(service);
 		}
 		
 		for (MetaModelType<?> metaType : coreMetaService.getManagedTypes()) {
-			persist(typeConvertor.convert(metaType));
+			metaDataServiceManager.save(typeConvertor.convert(metaType));
 		}
 		
 		while (links != null) {

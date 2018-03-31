@@ -38,8 +38,8 @@ public class K2Interface extends K2Type {
 	public K2Interface() {
 		super(); 
 	}
-	public K2Interface(String className) {
-		super(className); 
+	public K2Interface(long id) {
+		super(id); 
 		this.setType(K2Type.Type.INTERFACE);
 	}
 	

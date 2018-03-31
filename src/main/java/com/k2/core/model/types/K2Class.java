@@ -69,8 +69,8 @@ public class K2Class extends K2Type {
 	public K2Class() {
 		super(); 
 	}
-	public K2Class(String className) {
-		super(className);
+	public K2Class(long id) {
+		super(id);
 		this.setType(K2Type.Type.CLASS);
 	}
 	

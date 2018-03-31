@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Inheritance;
@@ -14,7 +15,9 @@ import javax.persistence.Embedded;
 
 import com.k2.MetaModel.TypeValue;
 import com.k2.MetaModel.annotations.MetaType;
+import com.k2.MetaModel.annotations.MetaTypeField;
 import com.k2.MetaModel.annotations.MetaEntity;
+import com.k2.MetaModel.annotations.MetaField;
 import com.k2.MetaModel.annotations.MetaSubType;
 import com.k2.MetaModel.annotations.MetaVersion;
 
@@ -56,18 +59,29 @@ public class K2Type  implements Comparable<K2Type> {
 	}
 	
 	public K2Type() {}
-	public K2Type(String className) {
-		this.className = className; 
+	public K2Type(long id) {
+		this.id = id; 
 	}
 	
-	// Name ------------------------------------------------------------------------------
+	// Id ------------------------------------------------------------------------------
+	@MetaField()
 	@Id
-	@Column(name="CLASSNAME", nullable=false)
+	@GeneratedValue
+	@Column(name="ID", nullable=false)
+	private long id;
+	public long getId() { return id; }
+	public void setId(long id) { this.id = id; }
+	
+	// Class Name ------------------------------------------------------------------------------
+	@MetaField()
+	@Column(name="CLASSNAME", nullable=false, length=256)
 	private String className;
 	public String getClassName() { return className; }
 	public void setClassName(String className) { this.className = className; }
 	
 	// K2 Type ---------------------------------------------------------------------------
+	@MetaField()
+	@MetaTypeField()
 	@Column(name="K2TYPE", nullable=false)
 	@Enumerated(EnumType.STRING)
 	private Type type;
@@ -75,18 +89,21 @@ public class K2Type  implements Comparable<K2Type> {
 	public void setType(Type type) { this.type = type; }
 
 	// Alias ------------------------------------------------------------------------------
+	@MetaField()
 	@Column(name="ALIAS", nullable=false, length=50)
 	private String alias;
 	public String getAlias() { return alias; }
 	public void setAlias(String alias) { this.alias = alias; }
 
 	// Title ------------------------------------------------------------------------------
+	@MetaField()
 	@Column(name="TITLE", nullable=false, length=120)
 	private String title;
 	public String getTitle() { return title; }
 	public void setTitle(String title) { this.title = title; }
 
 	// Description ------------------------------------------------------------------------------
+	@MetaField()
 	@Column(name="DESCRIPTION", nullable=true, length=4000)
 	private String description;
 	public String getDescription() { return description; }

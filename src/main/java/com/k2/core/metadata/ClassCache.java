@@ -120,7 +120,7 @@ public class ClassCache<T> {
 			put(key, instance);
 			return instance;
 		}
-		throw new EntityNotFoundException(StringUtil.replaceAll("No instance of the Class{} exists with the key {} when merging", "{}", cls.getName(), KeyUtil.serialize(key)));
+		throw new EntityNotFoundException(StringUtil.replaceAll("No instance of the Class {} exists with the key {} when merging", "{}", cls.getName(), KeyUtil.serialize(key)));
 	}
 	
 	@SuppressWarnings("unchecked")

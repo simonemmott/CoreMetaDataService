@@ -23,8 +23,8 @@ public class K2Native extends K2Class{
 	public K2Native() {
 		super(); 
 	}
-	public K2Native(String className) {
-		super(className); 
+	public K2Native(long id) {
+		super(id); 
 		this.setClassType(K2Class.ClassType.NATIVE);
 	}
 	

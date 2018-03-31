@@ -18,7 +18,8 @@ public class MetaToK2Interface extends MetaToDataConvertor<K2Interface> {
 	@SuppressWarnings("unchecked")
 	public K2Interface convert(Object obj) {
 		MetaModelInterface<K2Interface> meta = (MetaModelInterface<K2Interface>)obj;
-		K2Interface conv = new K2Interface(meta.className());
+		K2Interface conv = metaData.getServiceManager().newEntity(K2Interface.class);
+		conv.setClassName(meta.className());
 		
 		conv.setType(K2Type.Type.INTERFACE);
 //		conv.setMethods(methods);

@@ -9,6 +9,7 @@ import com.k2.MetaModel.model.MetaModelType;
 import com.k2.core.model.K2Service;
 import com.k2.core.model.K2Type;
 import com.k2.core.model.K2Version;
+import com.k2.core.model.types.K2Interface;
 
 public class MetaToK2Service extends MetaToDataConvertor<K2Service> {
 
@@ -18,7 +19,9 @@ public class MetaToK2Service extends MetaToDataConvertor<K2Service> {
 	@Override
 	public K2Service convert(Object obj) {
 		MetaModelService meta = (MetaModelService)obj;
-		K2Service conv = new K2Service(meta.alias());
+		K2Service conv = metaData.getServiceManager().newEntity(K2Service.class);
+		conv.setAlias(meta.alias());
+
 		conv.setDescription(meta.description());
 		conv.setTitle(meta.title());
 		conv.setVersion(new K2Version(meta.version()));

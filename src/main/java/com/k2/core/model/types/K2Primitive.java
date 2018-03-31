@@ -40,8 +40,8 @@ public class K2Primitive extends K2Type {
 	public K2Primitive() {
 		super(); 
 	}
-	public K2Primitive(String className) {
-		super(className); 
+	public K2Primitive(long id) {
+		super(id); 
 		this.setType(K2Type.Type.PRIMITIVE);
 	}
 	

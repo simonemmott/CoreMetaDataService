@@ -34,8 +34,8 @@ public class K2Entity extends K2Class {
 	public K2Entity() {
 		super(); 
 	}
-	public K2Entity(String className) {
-		super(className); 
+	public K2Entity(long id) {
+		super(id); 
 	}
 	
 	// Entity Name ----------------------------------------------------------------------------

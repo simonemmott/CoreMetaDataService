@@ -34,8 +34,8 @@ public class K2Embeddable extends K2Class {
 	public K2Embeddable() {
 		super(); 
 	}
-	public K2Embeddable(String className) {
-		super(className); 
+	public K2Embeddable(long id) {
+		super(id); 
 		this.setClassType(K2Class.ClassType.EMBEDDABLE);
 	}
 	
