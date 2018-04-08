@@ -18,42 +18,49 @@ import com.k2.Util.Version.Version;
 @Table(name="VERSIONS")
 public class K2Version implements Version {
 	
-	@Column(name="MAJOR_VER", nullable=false)
-	private int major;
+	@Column(name="MAJORVER", nullable=false)
+	private int majorVer;
+	public int getMajor() { return majorVer; }
 	
-	@Column(name="MINOR_VER", nullable=false)
-	private int minor;
+	@Column(name="MINORVER", nullable=false)
+	private int minorVer;
+	public int getMinor() { return minorVer; }
 	
-	@Column(name="POINT_VER", nullable=false)
-	private int point;
+	@Column(name="POINTVER", nullable=false)
+	private int pointVer;
+	public int getPoint() { return pointVer; }
+	
+	@Column(name="BUILDNUMBER", nullable=false)
+	private int buildNumber;
+	public int getBuildNumber() { return buildNumber; }
 	
 	public K2Version() {}
 	public K2Version(int major, int minor, int point) {
-		this.major = major;
-		this.minor = minor;
-		this.point = point;
+		this.majorVer = major;
+		this.minorVer = minor;
+		this.pointVer = point;
 	}
 
 	public K2Version(Version version) {
-		this.major = (version==null) ? 0 : version.major();
-		this.minor = (version==null) ? 0 : version.minor();
-		this.point = (version==null) ? 0 : version.point();
+		this.majorVer = (version==null) ? 0 : version.major();
+		this.minorVer = (version==null) ? 0 : version.minor();
+		this.pointVer = (version==null) ? 0 : version.point();
 	}
 	
 	@Override
 	public void increment(Increment inc) {
 		switch(inc) {
 		case MAJOR:
-			major++;
-			minor=0;
-			point=0;
+			majorVer++;
+			minorVer=0;
+			pointVer=0;
 			break;
 		case MINOR:
-			minor++;
-			point=0;
+			minorVer++;
+			pointVer=0;
 			break;
 		case POINT:
-			point++;
+			pointVer++;
 			break;
 		default:
 			break;
@@ -64,9 +71,9 @@ public class K2Version implements Version {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + major;
-		result = prime * result + minor;
-		result = prime * result + point;
+		result = prime * result + majorVer;
+		result = prime * result + minorVer;
+		result = prime * result + pointVer;
 		return result;
 	}
 
@@ -82,11 +89,11 @@ public class K2Version implements Version {
 		if (getClass() != obj.getClass())
 			return false;
 		Version other = (Version) obj;
-		if (major != other.major())
+		if (majorVer != other.major())
 			return false;
-		if (minor != other.minor())
+		if (minorVer != other.minor())
 			return false;
-		if (point != other.point())
+		if (pointVer != other.point())
 			return false;
 		return true;
 	}
@@ -96,27 +103,27 @@ public class K2Version implements Version {
 	 */
 	@Override
 	public String toString() {
-		return "v" + major + "." + minor + "." + point;
+		return "v" + majorVer + "." + minorVer + "." + pointVer;
 	}
 	@Override
 	public boolean includes(Version ver) {
-		if (ver.major() < major) return true;
-		if (ver.major() > major) return false;
-		if (ver.minor() < minor) return true;
-		if (ver.minor() > minor) return false;
-		if (ver.point() < point) return true;
-		if (ver.point() > point) return false;
+		if (ver.major() < majorVer) return true;
+		if (ver.major() > majorVer) return false;
+		if (ver.minor() < minorVer) return true;
+		if (ver.minor() > minorVer) return false;
+		if (ver.point() < pointVer) return true;
+		if (ver.point() > pointVer) return false;
 		if (equals(ver)) return true;
 		return false;
 	}
 
 	@Override
-	public int major() {return major;}
+	public int major() {return majorVer;}
 
 	@Override
-	public int minor() { return minor; }
+	public int minor() { return minorVer; }
 
 	@Override
-	public int point() { return point; }
+	public int point() { return pointVer; }
 
 }

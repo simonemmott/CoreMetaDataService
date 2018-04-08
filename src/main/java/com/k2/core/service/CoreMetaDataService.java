@@ -1,9 +1,11 @@
 package com.k2.core.service;
 
+import com.k2.JavaFactory.JavaWriterException;
+
 public interface CoreMetaDataService {
 
 	public int testMethod(String str);
 
-	public void writeAppJavaSource();
+	public void writeAppConfig(String org, String alias) throws JavaWriterException;
 
 }

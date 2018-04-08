@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import com.k2.MetaModel.annotations.MetaType;
 import com.k2.MetaModel.annotations.MetaEntity;
 import com.k2.MetaModel.annotations.MetaVersion;
+import com.k2.Service.service.ServiceManager;
 import com.k2.core.model.types.classes.K2Embeddable;
 import com.k2.core.model.types.classes.K2Entity;
 import com.k2.core.model.types.classes.K2Transient;
@@ -21,6 +22,9 @@ import com.k2.core.model.types.classes.K2Transient;
 @Entity
 @Table(name="SERVICES")
 public class K2Service {
+
+	protected ServiceManager serviceManager;
+	public void setServiceManager(ServiceManager serviceManager) { this.serviceManager = serviceManager; }
 
 	public K2Service() {}
 	public K2Service(String alias) {
@@ -53,6 +57,12 @@ public class K2Service {
 	private String description;
 	public String getDescription() { return description; }
 	public void setDescription(String description) { this.description = description; }
+	
+	// ConfigClassName ----------------------------------------------------------------------
+	@Column(name="CONFIGCLASSNAME", nullable=true)
+	private String configClassName;
+	public String getConfigClassName() { return configClassName; }
+	public void setConfigClassName(String configClassName) { this.configClassName = configClassName; }
 	
 	// All Managed Types ----------------------------------------------------------------
 	private List<K2Type> allManagedTypes;

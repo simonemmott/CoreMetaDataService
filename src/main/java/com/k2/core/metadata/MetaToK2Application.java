@@ -23,6 +23,7 @@ public class MetaToK2Application extends MetaToDataConvertor<K2Application> {
 		conv.setDescription(meta.description());
 		conv.setVersion(new K2Version(meta.version()));
 		conv.setWebsite(meta.website().toString());
+		conv.setConfigClassName(meta.configurationClass().getName());
 		
 		return conv;
 	}

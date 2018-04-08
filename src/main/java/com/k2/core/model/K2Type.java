@@ -20,6 +20,7 @@ import com.k2.MetaModel.annotations.MetaEntity;
 import com.k2.MetaModel.annotations.MetaField;
 import com.k2.MetaModel.annotations.MetaSubType;
 import com.k2.MetaModel.annotations.MetaVersion;
+import com.k2.Service.service.ServiceManager;
 
 @MetaVersion(major=0, minor=0, point=1)
 @MetaType
@@ -29,6 +30,9 @@ import com.k2.MetaModel.annotations.MetaVersion;
 @Inheritance(strategy=InheritanceType.JOINED)
 @DiscriminatorColumn(name="K2TYPE")
 public class K2Type  implements Comparable<K2Type> {
+
+	protected ServiceManager serviceManager;
+	public void setServiceManager(ServiceManager serviceManager) { this.serviceManager = serviceManager; }
 
 	@Override
 	public int compareTo(K2Type o) {

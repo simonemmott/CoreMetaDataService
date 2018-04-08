@@ -16,6 +16,7 @@ import com.k2.MetaModel.annotations.MetaEntity;
 import com.k2.MetaModel.annotations.MetaField;
 import com.k2.MetaModel.annotations.MetaOwningSet;
 import com.k2.MetaModel.annotations.MetaVersion;
+import com.k2.Service.service.ServiceManager;
 
 @MetaVersion(major=0, minor=0, point=1)
 @MetaType
@@ -26,6 +27,9 @@ import com.k2.MetaModel.annotations.MetaVersion;
 @IdClass(K2ImplementedServiceId.class)
 public class K2ImplementedService {
 	
+	protected ServiceManager serviceManager;
+	public void setServiceManager(ServiceManager serviceManager) { this.serviceManager = serviceManager; }
+
 	public K2ImplementedService() {}
 	public K2ImplementedService(String organisation, String alias) {
 		this.organisation = organisation;
@@ -55,6 +59,9 @@ public class K2ImplementedService {
 	private String serviceAlias;
 	public String getServiceAlias() { return serviceAlias; }
 	public void setServiceAlias(String serviceAlias) { this.serviceAlias = serviceAlias; }
+	
+	// Service - Dynamic Link --------------------------------------------------------------------
+	public K2Service getService() { return serviceManager.find(K2Service.class, serviceAlias); }
 	
 
 }

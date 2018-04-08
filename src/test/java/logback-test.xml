@@ -10,6 +10,10 @@
 
   <logger name="com.k2.MetaModel" level="off"/>
   <logger name="com.k2.MetaModel.model.types.MetaModelClass" level="trace"/>
+  <logger name="com.k2.core.service" level="trace"/>
+  <logger name="com.k2.Service.service" level="trace"/>
+  <logger name="com.k2.Wiget.AWiget" level="debug"/>
+  <logger name="com.k2.core.javaFactory.JavaAssembly" level="debug"/>
   <root level="debug">
     <appender-ref ref="STDOUT" />
   </root>

@@ -2,7 +2,9 @@ package com.k2.core;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.lang.invoke.MethodHandles;
+import java.util.Scanner;
 
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -16,6 +18,7 @@ import com.k2.Util.Version.Version;
 import com.k2.Util.tuple.Pair;
 import com.k2.core.config.CoreMetaDataAppConfig;
 import com.k2.core.config.CoreMetaDataServiceConfig;
+import com.k2.core.javaFactory.CoreJavaWriter;
 import com.k2.core.metadata.MetaData;
 import com.k2.core.model.K2Application;
 import com.k2.core.model.K2ApplicationId;
@@ -48,10 +51,10 @@ public class CoreMetaDataBasicTests {
 		
 		ServiceManager serviceManager = metaData.getServiceManager();
 				
-		K2Application app = serviceManager.find(K2Application.class, "k2.com", "k2CoreMetaData");
+		K2Application app = serviceManager.find(K2Application.class, "com.k2", "k2CoreMetaData");
 						
 		assertNotNull(app);
-		assertEquals("k2.com", app.getOrganisation());
+		assertEquals("com.k2", app.getOrganisation());
 		assertEquals("k2CoreMetaData", app.getAlias());
 		assertEquals("K2 Core MetaData", app.getTitle());
 		assertEquals("This is a dummy application to generate the core meta data from the core meta data service classes", app.getDescription());
@@ -66,7 +69,7 @@ public class CoreMetaDataBasicTests {
 		
 		K2ImplementedService implementedService = (K2ImplementedService) app.getImplementedServices().toArray()[0];
 		
-		assertEquals("k2.com", implementedService.getOrganisation());
+		assertEquals("com.k2", implementedService.getOrganisation());
 		assertEquals("k2CoreMetaData", implementedService.getAlias());
 		assertEquals("coreMetaDataService", implementedService.getServiceAlias());
 		
@@ -90,5 +93,47 @@ public class CoreMetaDataBasicTests {
 		
 		assertEquals("/Users/simon/Personal/K2_Workshop/example/json", config.getMetadateRepositoryPath());
 		assertEquals("/Users/simon/Personal/K2_Workshop/example/src", config.getJavaRepositoryPath());
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Test
+	public void appWriterTest() throws Throwable {
+		metaData.getMetaModel().configure("/Users/simon/Personal/K2_Workshop/example/conf");
+
+		File coreMetaDataAppConfig_java = new File("/Users/simon/Personal/K2_Workshop/example/src/com/k2/core/config/CoreMetaDataAppConfig.java");
+		if (coreMetaDataAppConfig_java.exists())
+			coreMetaDataAppConfig_java.delete();
+		
+		assertFalse(coreMetaDataAppConfig_java.exists());
+
+		metaData.getServiceManager().invokeServiceMethod("writeAppConfig", new Pair("org", "com.k2"), new Pair("alias", "k2CoreMetaData"));	
+		
+		assertTrue(coreMetaDataAppConfig_java.exists());
+		
+		String content = new Scanner(coreMetaDataAppConfig_java).useDelimiter("\\Z").next();
+		String expected = 
+				"package com.k2.core.config;\n" + 
+				"\n" + 
+				"import com.k2.MetaModel.annotations.MetaApplication;\n" + 
+				"import com.k2.MetaModel.annotations.MetaVersion;\n" + 
+				"\n" + 
+				"@MetaApplication(\n" + 
+				"	alias=\"k2CoreMetaData\",\n" + 
+				"	title=\"K2 Core MetaData\",\n" + 
+				"	description=\"This is a dummy application to generate the core meta data from the core meta data service classes\",\n" + 
+				"	version=@MetaVersion(major=0, minor=0, point=1, build=0),\n" + 
+				"	organisation=\"com.k2\",\n" + 
+				"	website=\"http://www.k2.com\",\n" + 
+				"	services={\n" + 
+				"		CoreMetaDataServiceConfig.class\n" + 
+				"	})\n" + 
+				"public class CoreMetaDataAppConfig {\n" + 
+				"\n" + 
+				"}";
+		
+		assertEquals(expected, content);
+		
+		
+		
 	}
 }

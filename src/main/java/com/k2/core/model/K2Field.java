@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import com.k2.MetaModel.annotations.MetaType;
 import com.k2.MetaModel.annotations.MetaEntity;
 import com.k2.MetaModel.annotations.MetaVersion;
+import com.k2.Service.service.ServiceManager;
 
 @MetaVersion(major=0, minor=0, point=1)
 @MetaType
@@ -21,6 +22,9 @@ import com.k2.MetaModel.annotations.MetaVersion;
 @Table(name="FIELDS")
 @IdClass(K2FieldId.class)
 public class K2Field {
+	
+	protected ServiceManager serviceManager;
+	public void setServiceManager(ServiceManager serviceManager) { this.serviceManager = serviceManager; }
 	
 	public K2Field() {}
 	public K2Field(String className, String name) {

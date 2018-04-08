@@ -32,7 +32,7 @@ import com.k2.Service.service.ServiceManager;
 @IdClass(K2ApplicationId.class)
 public class K2Application {
 	
-	private ServiceManager serviceManager;
+	protected ServiceManager serviceManager;
 	public void setServiceManager(ServiceManager serviceManager) { this.serviceManager = serviceManager; }
 	
 	public K2Application() {}
@@ -83,6 +83,13 @@ public class K2Application {
 	private String website;
 	public String getWebsite() { return website; }
 	public void setWebsite(String website) { this.website = website; }
+	
+	// Config Class Name ------------------------------------------------------------------------------
+	@MetaField
+	@Column(name="CONFIGCLASSNAME", nullable=false, length=256)
+	private String configClassName;
+	public String getConfigClassName() { return configClassName; }
+	public void setConfigClassName(String configClassName) { this.configClassName = configClassName; }
 	
 	// Implemented Services ----------------------------------------------------------------------------------
 	@MetaOwningSet
