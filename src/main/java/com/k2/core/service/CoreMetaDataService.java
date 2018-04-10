@@ -8,4 +8,6 @@ public interface CoreMetaDataService {
 
 	public void writeAppConfig(String org, String alias) throws JavaWriterException;
 
+	void writeService(String alias) throws JavaWriterException;
+
 }

@@ -62,6 +62,6 @@ public class K2ImplementedService {
 	
 	// Service - Dynamic Link --------------------------------------------------------------------
 	public K2Service getService() { return serviceManager.find(K2Service.class, serviceAlias); }
-	
+
 
 }

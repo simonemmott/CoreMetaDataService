@@ -111,23 +111,81 @@ public class CoreMetaDataBasicTests {
 		assertTrue(coreMetaDataAppConfig_java.exists());
 		
 		String content = new Scanner(coreMetaDataAppConfig_java).useDelimiter("\\Z").next();
+		
+//		System.out.println(content);
+		
 		String expected = 
 				"package com.k2.core.config;\n" + 
+				"\n" + 
 				"\n" + 
 				"import com.k2.MetaModel.annotations.MetaApplication;\n" + 
 				"import com.k2.MetaModel.annotations.MetaVersion;\n" + 
 				"\n" + 
-				"@MetaApplication(\n" + 
-				"	alias=\"k2CoreMetaData\",\n" + 
-				"	title=\"K2 Core MetaData\",\n" + 
-				"	description=\"This is a dummy application to generate the core meta data from the core meta data service classes\",\n" + 
-				"	version=@MetaVersion(major=0, minor=0, point=1, build=0),\n" + 
-				"	organisation=\"com.k2\",\n" + 
-				"	website=\"http://www.k2.com\",\n" + 
-				"	services={\n" + 
+				"@MetaApplication(alias = \"k2CoreMetaData\", \n" + 
+				"	title = \"K2 Core MetaData\", \n" + 
+				"	description = \"This is a dummy application to generate the core meta data from the core meta data service classes\", \n" + 
+				"	version = @MetaVersion(major = 0, minor = 0, point = 1, build = 0), \n" + 
+				"	organisation = \"com.k2\", \n" + 
+				"	website = \"http://www.k2.com\", \n" + 
+				"	services = {\n" + 
 				"		CoreMetaDataServiceConfig.class\n" + 
 				"	})\n" + 
-				"public class CoreMetaDataAppConfig {\n" + 
+				"class CoreMetaDataAppConfig {\n" + 
+				"\n" + 
+				"}";
+		
+		assertEquals(expected, content);
+		
+		
+		
+	}
+
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Test
+	public void serviceWriterTest() throws Throwable {
+		metaData.getMetaModel().configure("/Users/simon/Personal/K2_Workshop/example/conf");
+
+		File coreMetaDataServiceConfig_java = new File("/Users/simon/Personal/K2_Workshop/example/src/com/k2/core/config/CoreMetaDataServiceConfig.java");
+		if (coreMetaDataServiceConfig_java.exists())
+			coreMetaDataServiceConfig_java.delete();
+		
+		assertFalse(coreMetaDataServiceConfig_java.exists());
+
+		metaData.getServiceManager().invokeServiceMethod("writeService", new Pair("alias", "coreMetaDataService"));	
+		
+		assertTrue(coreMetaDataServiceConfig_java.exists());
+		
+		String content = new Scanner(coreMetaDataServiceConfig_java).useDelimiter("\\Z").next();
+		
+//		System.out.println(content);
+		
+		String expected = 
+				"package com.k2.core.config;\n" + 
+				"\n" + 
+				"\n" + 
+				"import com.k2.ConfigClass.ConfigClass;\n" + 
+				"import com.k2.ConfigClass.ConfigLocation;\n" + 
+				"import com.k2.MetaModel.annotations.MetaService;\n" + 
+				"import com.k2.MetaModel.annotations.MetaVersion;\n" + 
+				"import com.k2.core.service.CoreMetaDataService;\n" + 
+				"import com.k2.core.service.CoreMetaDataServiceImpl;\n" + 
+				"\n" + 
+				"@ConfigClass(filename = \"k2-core.conf\", \n" + 
+				"	location = ConfigLocation.OS_FILE, \n" + 
+				"	dateFormat = \"dd-MM-yyyy\")\n" + 
+				"@MetaService(alias = \"coreMetaDataService\", \n" + 
+				"	title = \"The Core Metadata Service\", \n" + 
+				"	description = \"The classes in this service are the core meta data classes\", \n" + 
+				"	version = @MetaVersion(major = 0, minor = 0, point = 1, build = 0), \n" + 
+				"	modelPackageNames = {\n" + 
+				"		\"com.k2.core.model\", \n" + 
+				"		\"com.k2.core.model.types\", \n" + 
+				"		\"com.k2.core.model.types.classes\"\n" + 
+				"	}, \n" + 
+				"	serviceInterface = CoreMetaDataService.class, \n" + 
+				"	serviceImplementation = CoreMetaDataServiceImpl.class)\n" + 
+				"class CoreMetaDataServiceConfig {\n" + 
 				"\n" + 
 				"}";
 		

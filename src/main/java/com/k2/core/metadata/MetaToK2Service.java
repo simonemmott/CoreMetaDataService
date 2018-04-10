@@ -26,6 +26,9 @@ public class MetaToK2Service extends MetaToDataConvertor<K2Service> {
 		conv.setTitle(meta.title());
 		conv.setVersion(new K2Version(meta.version()));
 		conv.setConfigClassName(meta.serviceClass().getName());
+		conv.setServiceInterfaceName(meta.serviceInterface().getName());
+		conv.setServiceImplementationClassName(meta.serviceImplementation().getName());
+		conv.setConfigFileName(meta.getConfigFileName());
 		
 		List<K2Type> allManagedTypes = new ArrayList<K2Type>();
 		conv.setAllManagedTypes(allManagedTypes);

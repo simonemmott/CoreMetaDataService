@@ -10,6 +10,7 @@ import javax.persistence.Table;
 
 import com.k2.MetaModel.annotations.MetaType;
 import com.k2.MetaModel.annotations.MetaEntity;
+import com.k2.MetaModel.annotations.MetaField;
 import com.k2.MetaModel.annotations.MetaVersion;
 import com.k2.Service.service.ServiceManager;
 import com.k2.core.model.types.classes.K2Embeddable;
@@ -58,11 +59,37 @@ public class K2Service {
 	public String getDescription() { return description; }
 	public void setDescription(String description) { this.description = description; }
 	
-	// ConfigClassName ----------------------------------------------------------------------
-	@Column(name="CONFIGCLASSNAME", nullable=true)
+	// Config Class Name ------------------------------------------------------------------------------
+	@MetaField
+	@Id
+	@Column(name="CONFIGCLASSNAME", nullable=true, length=128)
 	private String configClassName;
 	public String getConfigClassName() { return configClassName; }
 	public void setConfigClassName(String configClassName) { this.configClassName = configClassName; }
+	
+	// Service Interface Name ------------------------------------------------------------------------------
+	@MetaField
+	@Id
+	@Column(name="SERVICEINTERFACENAME", nullable=true, length=128)
+	private String serviceInterfaceName;
+	public String getServiceInterfaceName() { return serviceInterfaceName; }
+	public void setServiceInterfaceName(String serviceInterfaceName) { this.serviceInterfaceName = serviceInterfaceName; }
+	
+	// Service Implementation Class Name ------------------------------------------------------------------------------
+	@MetaField
+	@Id
+	@Column(name="SERVICEIMPLEMENTATIONCLASSNAME", nullable=true, length=128)
+	private String serviceImplementationClassName;
+	public String getServiceImplementationClassName() { return serviceImplementationClassName; }
+	public void setServiceImplementationClassName(String serviceImplementationClassName) { this.serviceImplementationClassName = serviceImplementationClassName; }
+	
+	// Service Config File Name ------------------------------------------------------------------------------
+	@MetaField
+	@Id
+	@Column(name="CONFIGFILENAME", nullable=true, length=128)
+	private String configFileName;
+	public String getConfigFileName() { return configFileName; }
+	public void setConfigFileName(String configFileName) { this.configFileName = configFileName; }
 	
 	// All Managed Types ----------------------------------------------------------------
 	private List<K2Type> allManagedTypes;

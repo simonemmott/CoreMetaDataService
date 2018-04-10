@@ -38,9 +38,7 @@ public class AppConfigImpl extends AJavaWiget<K2Application> implements AppConfi
 		if (implementedServices != null) {
 			
 			for (K2ImplementedService is : implementedServices) {
-				K2Service service = is.getService();
-				if (service != null)
-					implementedServiceClassNames.add(service.getConfigClassName());
+				implementedServiceClassNames.add(is.getService().getConfigClassName());
 			}
 		}
 		

@@ -15,6 +15,7 @@ import com.k2.core.javaFactory.CoreJavaWriter;
 import com.k2.core.javaFactory.CoreJavaWriter;
 import com.k2.core.metadata.MetaDataError;
 import com.k2.core.model.K2Application;
+import com.k2.core.model.K2Service;
 
 @MetaServiceObject
 public class CoreMetaDataServiceImpl implements CoreMetaDataService {
@@ -49,11 +50,20 @@ public class CoreMetaDataServiceImpl implements CoreMetaDataService {
 	@Override
 	public void writeAppConfig(@MetaParameter("org")String org, @MetaParameter("alias")String alias) throws JavaWriterException {
 		logger.trace("Invoking CoreMetaDataService.writeAppConfig({}, {})", org, alias);
-		logger.trace("ServiceManager: {}", serviceManager);
 		K2Application app = serviceManager.find(K2Application.class, org, alias);
 		if (coreJavaWriter == null)
 			setJavaWriter();
 		coreJavaWriter.writeAppConfig(app);
+	}
+	
+	@MetaServiceMethod("writeService")
+	@Override
+	public void writeService(@MetaParameter("alias")String alias) throws JavaWriterException {
+		logger.trace("Invoking CoreMetaDataService.writeService({})", alias);
+		K2Service service = serviceManager.find(K2Service.class, alias);
+		if (coreJavaWriter == null)
+			setJavaWriter();
+		coreJavaWriter.writeService(service);
 	}
 	
 }
