@@ -11,7 +11,9 @@ import javax.persistence.Table;
 import com.k2.MetaModel.annotations.MetaType;
 import com.k2.MetaModel.annotations.MetaEntity;
 import com.k2.MetaModel.annotations.MetaField;
+import com.k2.MetaModel.annotations.MetaList;
 import com.k2.MetaModel.annotations.MetaVersion;
+import com.k2.Service.dataAccess.K2Dao;
 import com.k2.Service.service.ServiceManager;
 import com.k2.core.model.types.classes.K2Embeddable;
 import com.k2.core.model.types.classes.K2Entity;
@@ -61,7 +63,6 @@ public class K2Service {
 	
 	// Config Class Name ------------------------------------------------------------------------------
 	@MetaField
-	@Id
 	@Column(name="CONFIGCLASSNAME", nullable=true, length=128)
 	private String configClassName;
 	public String getConfigClassName() { return configClassName; }
@@ -69,7 +70,6 @@ public class K2Service {
 	
 	// Service Interface Name ------------------------------------------------------------------------------
 	@MetaField
-	@Id
 	@Column(name="SERVICEINTERFACENAME", nullable=true, length=128)
 	private String serviceInterfaceName;
 	public String getServiceInterfaceName() { return serviceInterfaceName; }
@@ -77,7 +77,6 @@ public class K2Service {
 	
 	// Service Implementation Class Name ------------------------------------------------------------------------------
 	@MetaField
-	@Id
 	@Column(name="SERVICEIMPLEMENTATIONCLASSNAME", nullable=true, length=128)
 	private String serviceImplementationClassName;
 	public String getServiceImplementationClassName() { return serviceImplementationClassName; }
@@ -92,8 +91,15 @@ public class K2Service {
 	public void setConfigFileName(String configFileName) { this.configFileName = configFileName; }
 	
 	// All Managed Types ----------------------------------------------------------------
+	@MetaList(criteriaAlias="ManagedTypesForService")
 	private List<K2Type> allManagedTypes;
-	public List<K2Type> getAllManagedTypes() { return allManagedTypes; }
+	public List<K2Type> getAllManagedTypes() { 
+		if (allManagedTypes != null)
+			return allManagedTypes;
+		K2Dao<K2Type, String> dao = serviceManager.getDaoFactory().getDao(K2Type.class, String.class);
+		allManagedTypes = dao.list()
+		return allManagedTypes; 
+	}
 	public void setAllManagedTypes(List<K2Type> allManagedTypes) { this.allManagedTypes = allManagedTypes; }
 	
 	// Managed Entities -----------------------------------------------------------------

@@ -2,6 +2,7 @@ package com.k2.core.metadata.types;
 
 import java.io.Serializable;
 
+import com.k2.MetaModel.model.MetaModelField;
 import com.k2.MetaModel.model.types.MetaModelClass;
 import com.k2.MetaModel.model.types.classes.MetaModelEmbeddable;
 import com.k2.MetaModel.model.types.classes.MetaModelEntity;
@@ -44,6 +45,10 @@ public class MetaToK2Class extends MetaToDataConvertor {
 			throw new MetaDataError("Unexpected super type of MetaModelClass.class - {}", meta.getClass().getName());
 		
 		conv.setType(K2Type.Type.CLASS);
+		
+		for (MetaModelField<?,?> metaField  : meta.getDeclaredFields().values()) {
+			
+		}
 //		conv.setFields(fields);
 //		conv.setMethods(methods);
 		

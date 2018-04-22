@@ -16,6 +16,8 @@ import javax.persistence.Embedded;
 import com.k2.MetaModel.TypeValue;
 import com.k2.MetaModel.annotations.MetaType;
 import com.k2.MetaModel.annotations.MetaTypeField;
+import com.k2.MetaModel.annotations.MetaCriteria;
+import com.k2.MetaModel.annotations.MetaCriteriaParameter;
 import com.k2.MetaModel.annotations.MetaEntity;
 import com.k2.MetaModel.annotations.MetaField;
 import com.k2.MetaModel.annotations.MetaSubType;
@@ -29,6 +31,40 @@ import com.k2.Service.service.ServiceManager;
 @Table(name="TYPES")
 @Inheritance(strategy=InheritanceType.JOINED)
 @DiscriminatorColumn(name="K2TYPE")
+@MetaCriteria(
+	alias="ManagedTypesForService",
+	parameters= {
+		@MetaCriteriaParameter(name = "service", type = K2Service.class)
+	},
+	criteria="{ OR: ["+
+				"{ AND: ["+
+					"{ EQUALS: ["+
+						"{ FIELD: \"type\" },"+
+						"{ ENUM: \"com.k2.core.model.K2Type.Type.CLASS\" }"+
+					"]},"+
+					"{ EQUALS: ["+
+						"{ TREAT: ["+
+							"{ CLASS: \"com.k2.core.model.types.K2Class\" },"+
+							"{ FIELD: \"k2Service\" }"+
+						"]},"+
+						"{ PARAMETER: \"service\" }"+
+					"]}"+
+				"]},"+
+				"{ AND: ["+
+					"{ EQUALS: ["+
+						"{ FIELD: \"type\"},"+
+						"{ ENUM: \"com.k2.core.model.K2Type.Type.INTERFACE\"}"+
+					"]},"+
+					"{ EQUALS: ["+
+						"{ TREAT: ["+
+							"{ CLASS: \"com.k2.core.model.types.K2Interface\" },"+
+							"{ FIELD: \"k2Service\" }"+
+						"]},"+
+						"{ PARAMETER: \"service\" }"+
+					"]}"+
+				"]}"+
+			"]}"
+		)
 public class K2Type  implements Comparable<K2Type> {
 
 	protected ServiceManager serviceManager;
